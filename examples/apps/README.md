@@ -19,3 +19,7 @@ create and write new applications.
 - [Generic Workload Client](generic_client)
   This is a generic client for testing with any worker
 
+- [Coldchain](cold_chain_eval)
+  This application performs a check if the temperature and humidity values for a Shipment are within the specified range.
+  The client provides a REST server.
+

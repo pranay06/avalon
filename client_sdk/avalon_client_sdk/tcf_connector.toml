@@ -24,30 +24,69 @@ json_rpc_uri = "http://localhost:1947"
 
 #Block chain type, it identifies which blockchain to use
 [blockchain]
-type = "Ethereum"
+type = "Quorum"
 
 [ethereum]
 #Direct registry contract file
 direct_registry_contract_file = "client_sdk/avalon_client_sdk/ethereum/contracts/WorkerRegistryList.sol"
 #Worker registry contract file
 worker_registry_contract_file = "client_sdk/avalon_client_sdk/ethereum/contracts/WorkerRegistry.sol"
+#WorkOrder invocation contract file
+workOrder_contract_file= "client_sdk/avalon_client_sdk/ethereum/contracts/WorkOrder.sol"
 #Deployed contract address of direct registry contract address.
 #Initial deploy the contract using eth_cli.py to get the this address
-direct_registry_contract_address = "0xD5A613945DE851C7c2f83fFDA4de0aE01CE980c0"
+direct_registry_contract_address = "0xa8E2d4F8b23a609f7881A50086Ae2f0d5d015329"
 #Deployed contract address of worker registry contract address.
-worker_registry_contract_address = "0x523748D492AfEEC90767403Da7C1e86feBB10435"
+worker_registry_contract_address = "0x4f9716fca6c9beaB65A3A0941bf630197938A2D3"
+# Deployed contract address of WorkOrder Contract file
+workOrder_contract_contract_address = "0x81b03ba54621fa37a53564cAde0a5Bcf2b4a6022"
+
+ 
 
 #Ethereum account details
-eth_account = "0xDcB780ea30C1041abfcCCE4233c275B9F313eAf4"
+eth_account = "0xFF33240b5520cc7fc4E276b45d05cFC12f36328e"
 #Ethereum account private key should be set in environment variable WALLET_PRIVATE_KEY
 #Http provider for ropsten test network.
-eth_http_provider = "https://ropsten.infura.io/v3/9af17e6320414af8a3168cd9fe9d653d"
+eth_http_provider = "https://ropsten.infura.io/"
 #chain_id is 3 for ropsten test network
 #"1": Ethereum Mainnet
 #"2": Morden Testnet (deprecated)
 #"3": Ropsten Testnet
 #"4": Rinkeby Testnet
 #"42": Kovan Testnet
-chain_id = 3
+chain_id = 27609
 gas_limit = 3000000
-gas_price = "100"
+gas_price = "0"
+
+
+[quorum]
+#Direct registry contract file
+direct_registry_contract_file = "client_sdk/avalon_client_sdk/quorum/contracts/WorkerRegistryList.sol"
+#Worker registry contract file
+worker_registry_contract_file = "client_sdk/avalon_client_sdk/quorum/contracts/WorkerRegistry.sol"
+#WorkOrder invocation contract file
+workOrder_contract_file= "client_sdk/avalon_client_sdk/quorum/contracts/WorkOrder.sol"
+#Deployed contract address of direct registry contract address.
+#Initial deploy the contract using eth_cli.py to get the this address
+direct_registry_contract_address = "0xa8E2d4F8b23a609f7881A50086Ae2f0d5d015329"
+#Deployed contract address of worker registry contract address.
+worker_registry_contract_address = "0x4f9716fca6c9beaB65A3A0941bf630197938A2D3"
+# Deployed contract address of WorkOrder Contract file
+workOrder_contract_contract_address = "0x81b03ba54621fa37a53564cAde0a5Bcf2b4a6022"
+
+ 
+
+#Ethereum account details
+eth_account = "0xFF33240b5520cc7fc4E276b45d05cFC12f36328e"
+#Ethereum account private key should be set in environment variable WALLET_PRIVATE_KEY
+#Http provider for ropsten test network.
+eth_http_provider = "https://ropsten.infura.io/"
+#chain_id is 3 for ropsten test network
+#"1": Ethereum Mainnet
+#"2": Morden Testnet (deprecated)
+#"3": Ropsten Testnet
+#"4": Rinkeby Testnet
+#"42": Kovan Testnet
+chain_id = 27609
+gas_limit = 3000000
+gas_price = "0"

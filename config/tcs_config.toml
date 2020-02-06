@@ -32,6 +32,8 @@ sleep_interval = "10"
 [Listener]
 listener_port = 1947
 max_work_order_count = 10
+zmq_port = '5555'
+zmq_url = "tcp://localhost:"
 
 # -------------------------------------------------------
 # EnclaveModule -- configuration of the Intel SGX Enclave

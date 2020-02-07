@@ -38,13 +38,7 @@ logger = logging.getLogger(__name__)
 
 # representation of the enclave data
 enclave_data = None
-#ZMQ_PORT = '5555'
-#configImport =toml.load('/project/TrustedComputeFramework/client_sdk/avalon_client_sdk/tcf_connector.toml')
-#ZMQ_PORT = configImport['enclave_manager']['zmq_port']
-#logger.info(configImport)
-#logger.info("# XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-#logger.info(ZMQ_PORT)
-
+# ZMQ_PORT = '5555'
 
 
 class EnclaveManager:
@@ -162,7 +156,7 @@ class EnclaveManager:
         # End of for-loop
 
     # -----------------------------------------------------------------
-    def process_work_orders(self, kv_helper,wo_id_sdk):
+    def process_work_orders(self, kv_helper, wo_id_sdk):
         """
         Executes Run time flow of enclave manager
         """
@@ -184,30 +178,36 @@ class EnclaveManager:
             logger.info(wo_id_sdk)
             if wo_id == wo_id_sdk.decode("utf-8"):
                 try:
-                    kv_helper.set("wo-processing", wo_id,
-                                WorkOrderStatus.PROCESSING.name)
+                    kv_helper.set(
+                        "wo-processing", wo_id,
+                        WorkOrderStatus.PROCESSING.name)
 
                     # Get JSON workorder request corresponding to wo_id
                     wo_json_req = kv_helper.get("wo-requests", wo_id)
                     if wo_json_req is None:
-                        logger.error("Received empty work order corresponding " +
-                                    "to id %s from wo-requests table", wo_id)
+                        logger.error(
+                            "Received empty work order corresponding" +
+                            "to id %s from wo-requests table", wo_id)
                         kv_helper.remove("wo-processing", wo_id)
                         return
 
                 except Exception as e:
-                    logger.error("Problem while reading the work order %s"
-                                "from wo-requests table", wo_id)
+                    logger.error(
+                        "Problem while reading the work order %s"
+                        "from wo-requests table", wo_id)
                     kv_helper.remove("wo-processing", wo_id)
                     return
 
-                logger.info("Create workorder entry %s in wo-processing table",
-                            wo_id)
-                kv_helper.set("wo-processing", wo_id,
-                            WorkOrderStatus.PROCESSING.name)
+                logger.info(
+                    "Create workorder entry %s in wo-processing table",
+                    wo_id)
+                kv_helper.set(
+                    "wo-processing", wo_id,
+                    WorkOrderStatus.PROCESSING.name)
 
-                logger.info("Delete workorder entry %s from wo-scheduled table",
-                            wo_id)
+                logger.info(
+                    "Delete workorder entry %s from wo-scheduled table",
+                    wo_id)
                 kv_helper.remove("wo-scheduled", wo_id)
 
                 logger.info("Validating JSON workorder request %s", wo_id)
@@ -220,39 +220,58 @@ class EnclaveManager:
                     wo_response["Response"]["Status"] = WorkOrderStatus.FAILED
                     wo_response["Response"]["Message"] = \
                         "Workorder JSON request is invalid"
-                    kv_helper.set("wo-responses", wo_id, json.dumps(wo_response))
-                    kv_helper.set("wo-processed", wo_id,
-                                WorkOrderStatus.FAILED.name)
+                    kv_helper.set(
+                        "wo-responses",
+                        wo_id,
+                        json.dumps(wo_response))
+                    kv_helper.set(
+                        "wo-processed",
+                        wo_id,
+                        WorkOrderStatus.FAILED.name)
                     kv_helper.remove("wo-processing", wo_id)
                     return
 
                 # Execute work order request
 
                 logger.info("Execute workorder with id %s", wo_id)
-                wo_json_resp = execute_work_order(self.enclave_data, wo_json_req)
+                wo_json_resp = execute_work_order(
+                                        self.enclave_data,
+                                        wo_json_req)
                 wo_resp = json.loads(wo_json_resp)
 
                 logger.info("Update workorder receipt for workorder %s", wo_id)
-                receipt = self.__update_receipt(kv_helper, wo_id, wo_resp)
+                receipt = self.__update_receipt(
+                                        kv_helper,
+                                        wo_id,
+                                        wo_resp)
 
-                if "Response" in wo_resp and \
-                        wo_resp["Response"]["Status"] == WorkOrderStatus.FAILED:
+                if (
+                    "Response" in wo_resp and
+                    wo_resp["Response"]["Status"] == WorkOrderStatus.FAILED
+                ):
                     logger.error("error in Response")
-                    kv_helper.set("wo-processed", wo_id,
-                                WorkOrderStatus.FAILED.name)
+                    kv_helper.set(
+                            "wo-processed",
+                            wo_id,
+                            WorkOrderStatus.FAILED.name)
                     kv_helper.set("wo-responses", wo_id, wo_json_resp)
                     kv_helper.remove("wo-processing", wo_id)
                     return
 
                 logger.info("Mark workorder status for workorder id %s " +
                             "as Completed in wo-processed", wo_id)
-                kv_helper.set("wo-processed", wo_id, WorkOrderStatus.SUCCESS.name)
+                kv_helper.set(
+                        "wo-processed",
+                        wo_id,
+                        WorkOrderStatus.SUCCESS.name)
 
-                logger.info("Create entry in wo-responses table for workorder %s",
-                            wo_id)
+                logger.info(
+                    "Create entry in wo-responses table for" +
+                    "workorder %s", wo_id)
                 kv_helper.set("wo-responses", wo_id, wo_json_resp)
 
-                logger.info("Delete workorder entry %s from wo-processing table",
+                logger.info("Delete workorder entry %s from"
+                            "wo-processing table",
                             wo_id)
                 kv_helper.remove("wo-processing", wo_id)
                 return wo_json_resp
@@ -480,7 +499,7 @@ def start_enclave_manager(config):
                      "exiting SGX Enclave manager: {err}")
         exit(1)
 
-    #Binding with ZMQ Port
+    # Binding with ZMQ Port
     try:
         context = zmq.Context()
         socket = context.socket(zmq.REP)
@@ -488,8 +507,8 @@ def start_enclave_manager(config):
         logger.info("This is the ZMQ_PORT")
         logger.info(ZMQ_PORT)
         socket.bind("tcp://*:"+ZMQ_PORT)
-    except:
-        logger.error("Failed to bind socket")
+    except Exception:
+        logger.exception("Failed to bind socket")
 
     try:
         while True:
@@ -497,8 +516,7 @@ def start_enclave_manager(config):
             message = socket.recv()
             logger.info("Received request at enclave manager: %s" % message)
             response = enclave_manager.process_work_orders(kv_helper, message)
-            logger.info("enclave manager completed the processing Sending back response")
-            logger.info(response)
+            logger.info("enclave completed processing.sending back response")
             socket.send_string(response)
     except Exception as inst:
         logger.error("Error while processing work-order; " +

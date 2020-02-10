@@ -160,7 +160,7 @@ RUN cd /project/TrustedComputeFramework/connector_sdk \
 # Environment setup
 
 RUN echo "WEB3_INFURA_PROJECT_ID=9af17e6320414af8a3168cd9fe9d653d" >> /etc/environment \
-    && echo "WALLET_PRIVATE_KEY=4F611197A6E82715F4D2446FE015D1667E9C40A351411F3A7300F71F285D01B4" >> /etc/environment \
+    && echo "WALLET_PRIVATE_KEY=48ccd5293a40bee8c289d0bc51120015bb7a07b3bb889bad755162483c1c5264" >> /etc/environment \
 
  && echo "TCF_HOME=/project/TrustedComputeFramework/" >> /etc/environment \
  && if [ ! -z "$http_proxy"  ]; then \
@@ -190,13 +190,13 @@ ENV PATH=$PATH:$SGX_SDK/bin:$SGX_SDK/bin/x64
 ENV PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$SGX_SDK/pkgconfig
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SGX_SDK/sdk_libs
 # Ethereum private key of ethereum account
-ENV WALLET_PRIVATE_KEY="4F611197A6E82715F4D2446FE015D1667E9C40A351411F3A7300F71F285D01B4"
+ENV WALLET_PRIVATE_KEY="48ccd5293a40bee8c289d0bc51120015bb7a07b3bb889bad755162483c1c5264"
 # Set display, replace value with [IP address of host]:0
 ENV DISPLAY=:0
 
 WORKDIR /project/TrustedComputeFramework/tools/build
 
-# RUN make lint && echo "LINT SUCCESS"
+RUN make lint && echo "LINT SUCCESS"
 
 RUN if [ "$MAKECLEAN" != 0 ]; then echo "Clean build" && make clean; fi \
  && make \

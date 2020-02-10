@@ -32,6 +32,7 @@ sleep_interval = "10"
 [Listener]
 listener_port = 1947
 max_work_order_count = 10
+# zmq_port and zmq_url are the port and url used for zmq socket communication.
 zmq_port = '5555'
 zmq_url = "tcp://localhost:"
 

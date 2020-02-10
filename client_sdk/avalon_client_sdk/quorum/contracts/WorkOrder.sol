@@ -66,7 +66,7 @@ contract WorkOrder {
 
     //-------------------------Function definitions----------------------------
 
-    //Retrict call from authorised requester
+    //Restrict call from authorised requester
     function onlyRequester(address requester) internal view returns (bool) {
         if (msg.sender == requester) {
             return true;

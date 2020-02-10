@@ -30,7 +30,7 @@ logging.basicConfig(
 
 class QuorumWorkerRegistryImpl(WorkerRegistryClient):
     """
-    This class is to read worker registries, to interact with quorum blockchain.
+    This class is to read worker registries, it interract quorum blockchain.
     Detail method description will be available in interface
     """
 

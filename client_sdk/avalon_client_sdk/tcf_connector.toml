@@ -48,13 +48,14 @@ eth_account = "0xFF33240b5520cc7fc4E276b45d05cFC12f36328e"
 #Ethereum account private key should be set in environment variable WALLET_PRIVATE_KEY
 #Http provider for ropsten test network.
 eth_http_provider = "https://ropsten.infura.io/"
-#chain_id is 3 for ropsten test network
+# Chain-id of blockchain network 
 #"1": Ethereum Mainnet
 #"2": Morden Testnet (deprecated)
 #"3": Ropsten Testnet
 #"4": Rinkeby Testnet
 #"42": Kovan Testnet
-chain_id = 27609
+# Or specify the chain_id if using a private network
+chain_id = 3
 gas_limit = 3000000
 gas_price = "0"
 
@@ -81,12 +82,14 @@ eth_account = "0xFF33240b5520cc7fc4E276b45d05cFC12f36328e"
 #Ethereum account private key should be set in environment variable WALLET_PRIVATE_KEY
 #Http provider for ropsten test network.
 eth_http_provider = "https://ropsten.infura.io/"
-#chain_id is 3 for ropsten test network
+#Chain-id of blockchain network
 #"1": Ethereum Mainnet
 #"2": Morden Testnet (deprecated)
 #"3": Ropsten Testnet
 #"4": Rinkeby Testnet
 #"42": Kovan Testnet
-chain_id = 27609
+# Or specify the chain_id if using a private network
+chain_id = 3
 gas_limit = 3000000
 gas_price = "0"
+

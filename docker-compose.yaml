@@ -29,6 +29,8 @@ services:
         - TCF_DEBUG_BUILD=${TCF_DEBUG_BUILD:-}
         - DISPLAY=${DISPLAY:-}
         - XAUTHORITY=~/.Xauthority
+    ports:
+      - "5555:5555"
     volumes:
       # Below volume mappings are required for DISPLAY settings by heart disease GUI client
       - /tmp/.X11-unix:/tmp/.X11-unix

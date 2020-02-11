@@ -22,7 +22,6 @@ import sys
 import time
 import random
 import zmq
-import toml
 
 import sgx_work_order_request as work_order_request
 import tcf_enclave_helper as enclave_helper
